@@ -16,7 +16,15 @@ export function UserMenu() {
   const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    getMe().then((res) => setUser(res.data))
+    let ignore = false
+    getMe()
+      .then((res) => {
+        if (!ignore) setUser(res.data)
+      })
+      .catch(() => {})
+    return () => {
+      ignore = true
+    }
   }, [])
 
   return (

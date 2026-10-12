@@ -14,9 +14,20 @@ export function RecentTransactions() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    let ignore = false
     getTransactions({ limit: 5 })
-      .then((res) => setTransactions(res.data))
-      .finally(() => setIsLoading(false))
+      .then((res) => {
+        if (!ignore) setTransactions(res.data)
+      })
+      .catch(() => {
+        if (!ignore) setTransactions([])
+      })
+      .finally(() => {
+        if (!ignore) setIsLoading(false)
+      })
+    return () => {
+      ignore = true
+    }
   }, [])
 
   return (
