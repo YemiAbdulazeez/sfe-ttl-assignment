@@ -12,9 +12,17 @@ export function RatesWidget({ base }: { base: Currency }) {
   const [rates, setRates] = useState<Rate[]>()
 
   useEffect(() => {
-    Promise.all(QUOTES.map((quote) => getRate(quote, base))).then((results) =>
-      setRates(results.map((res) => res.data))
-    )
+    let ignore = false
+    Promise.all(QUOTES.map((quote) => getRate(quote, base)))
+      .then((results) => {
+        if (!ignore) setRates(results.map((res) => res.data))
+      })
+      .catch(() => {
+        if (!ignore) setRates([])
+      })
+    return () => {
+      ignore = true
+    }
   }, [base])
   const updatedAt = rates?.[0]?.updatedAt
 

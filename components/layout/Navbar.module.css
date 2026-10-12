@@ -1,9 +1,17 @@
-.navbar {
+.chrome {
   position: sticky;
   top: 0;
   z-index: 20;
   background: var(--color-surface);
+}
+
+.navbar {
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
+}
+
+.tabs {
+  display: none;
 }
 
 .inner {
@@ -48,6 +56,25 @@
   font-weight: var(--weight-semibold);
 }
 
+.tab {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+}
+
+.tabActive {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+
 @media (max-width: 640px) {
   .links {
     display: none;
@@ -55,5 +82,10 @@
 
   .inner {
     justify-content: space-between;
+  }
+
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--color-border);
   }
 }
