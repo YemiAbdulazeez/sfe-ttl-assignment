@@ -233,7 +233,8 @@
 .skeletonCircle,
 .skeletonTitle,
 .skeletonNarration,
-.skeletonAmount {
+.skeletonAmount,
+.skeletonDate {
   display: block;
   background: var(--color-border);
   animation: pulse 1.4s linear infinite;
@@ -284,9 +285,22 @@
   border-radius: var(--radius-sm);
 }
 
+.skeletonMoney {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+}
+
 .skeletonAmount {
-  width: 72px;
+  width: 88px;
   height: 12px;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonDate {
+  width: 40px;
+  height: 10px;
   border-radius: var(--radius-sm);
 }
 
@@ -328,7 +342,8 @@
   .skeletonCircle,
   .skeletonTitle,
   .skeletonNarration,
-  .skeletonAmount {
+  .skeletonAmount,
+  .skeletonDate {
     animation: none;
   }
 }

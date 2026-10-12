@@ -13,6 +13,7 @@ export function useTransactionList(state: TransactionListState) {
   const [rows, setRows] = useState<Transaction[] | null>(null)
   const [meta, setMeta] = useState<PageMeta | null>(null)
   const [failed, setFailed] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [attempt, setAttempt] = useState(0)
   const { page, q, type, status } = state
   const requestKey = `${page}\0${q}\0${type ?? ''}\0${status ?? ''}\0${attempt}`
@@ -20,6 +21,7 @@ export function useTransactionList(state: TransactionListState) {
   if (trackedKey !== requestKey) {
     setTrackedKey(requestKey)
     setFailed(false)
+    setLoading(true)
   }
 
   useEffect(() => {
@@ -31,14 +33,17 @@ export function useTransactionList(state: TransactionListState) {
         if (ignore) return
         if (!res.meta) {
           setFailed(true)
+          setLoading(false)
           return
         }
         setRows(res.data)
         setMeta(res.meta)
+        setLoading(false)
       })
       .catch((error: unknown) => {
         if (ignore || isAbortError(error)) return
         setFailed(true)
+        setLoading(false)
       })
 
     return () => {
@@ -51,6 +56,7 @@ export function useTransactionList(state: TransactionListState) {
     rows,
     meta,
     failed,
+    loading,
     retry: () => setAttempt((value) => value + 1),
   }
 }

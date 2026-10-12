@@ -23,7 +23,10 @@ export function TransactionSkeleton() {
             <span className={styles.skeletonTitle} />
             <span className={styles.skeletonNarration} />
           </span>
-          <span className={styles.skeletonAmount} />
+          <span className={styles.skeletonMoney}>
+            <span className={styles.skeletonAmount} />
+            <span className={styles.skeletonDate} />
+          </span>
         </div>
       ))}
     </div>

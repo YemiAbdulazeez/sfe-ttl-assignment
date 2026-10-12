@@ -30,7 +30,7 @@ type OpenMenu = 'type' | 'status' | null
 
 export function TransactionsView() {
   const { state, commit } = useTransactionListState()
-  const { rows, meta, failed, retry } = useTransactionList(state)
+  const { rows, meta, failed, loading, retry } = useTransactionList(state)
   const [searchValue, setSearchValue] = useState(state.q)
   const [syncedQuery, setSyncedQuery] = useState(state.q)
   const [pendingQuery, setPendingQuery] = useState(state.q)
@@ -109,6 +109,8 @@ export function TransactionsView() {
   const showInlineError = failed && rows !== null && rows.length > 0
   const showEmpty = !failed && rows !== null && rows.length === 0
   const showList = rows !== null && rows.length > 0
+  const searchPending = searchValue.trim() !== state.q
+  const showSearchSpinner = searchPending || (loading && (state.q !== '' || searchValue.trim() !== ''))
 
   return (
     <div className={styles.page}>
@@ -132,6 +134,7 @@ export function TransactionsView() {
               spellCheck={false}
               onChange={(event) => setSearchValue(event.target.value)}
             />
+            {showSearchSpinner ? <span className={styles.searchSpinner} aria-hidden="true" /> : null}
           </div>
         </div>
         <div className={styles.filterPair}>
